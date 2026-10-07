@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>《科学怪狗》｜生命、科学与实践</title>
+  <style>
+    :root {
+      --bg: #090909;
+      --ink: #f5f1e8;
+      --muted: #aaa49a;
+      --gold: #c9a86a;
+      --line: rgba(255, 255, 255, .16);
+      --serif: Georgia, "Times New Roman", "Noto Serif SC", "Songti SC", serif;
+      --sans: "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      overflow-x: hidden
+    }
+
+    button {
+      font: inherit
+    }
+
+    button:focus-visible {
+      outline: 1px solid var(--gold);
+      outline-offset: 4px
+    }
+
+    /* 第一幕 */
+    #opening {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      min-height: 100vh;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .82), rgba(0, 0, 0, .42), rgba(0, 0, 0, .78)), url("picture/p1.jpg") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .9s ease, visibility .9s ease
+    }
+
+    #opening:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 12%, rgba(0, 0, 0, .28) 55%, rgba(0, 0, 0, .88) 100%);
+      pointer-events: none
+    }
+
+    .opening-content {
+      position: relative;
+      z-index: 2;
+      width: min(1050px, 88%);
+      text-align: center;
+      transform: translateY(25px);
+      opacity: 0;
+      animation: openingIn 1.35s cubic-bezier(.2, .8, .2, 1) .25s forwards
+    }
+
+    .opening-kicker {
+      font-size: 1rem;
+      letter-spacing: .42em;
+      color: #ddd7ca;
+      margin-bottom: 25px
+    }
+
+    .opening-title {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(3.8rem, 8.2vw, 8.2rem);
+      line-height: 1.02;
+      letter-spacing: -.045em;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, .45)
+    }
+
+    .opening-desc {
+      width: min(680px, 100%);
+      margin: 32px auto 0;
+      color: #d2cdc2;
+      line-height: 2;
+      font-size: 1rem
+    }
+
+    .explore-btn {
+      margin-top: 38px;
+      padding: 14px 32px;
+      color: #f4eee2;
+      background: rgba(0, 0, 0, .18);
+      border: 1px solid rgba(255, 255, 255, .72);
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: .14em;
+      transition: .35s
+    }
+
+    .explore-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #111;
+      transform: translateY(-2px)
+    }
+
+    .opening-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none
+    }
+
+    @keyframes openingIn {
+      from {
+        opacity: 0;
+        transform: translateY(45px);
+        filter: blur(5px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0)
+      }
+    }
+
+    /* 主体 */
+    #site {
+      display: none;
+      min-height: 100vh
+    }
+
+    #site.show {
+      display: block;
+      animation: siteIn .8s ease both
+    }
+
+    @keyframes siteIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    .top-nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      width: min(1000px, calc(100% - 34px));
+      height: 62px;
+      display: flex;
+      align-items: center;
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      background: rgba(246, 242, 233, .91);
+      backdrop-filter: blur(18px);
+      border-radius: 18px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, .2)
+    }
+
+    .back-arrow {
+      width: 50px;
+      height: 50px;
+      border: 0;
+      background: transparent;
+      color: #1c2525;
+      font-size: 27px;
+      cursor: pointer;
+      flex: none
+    }
+
+    .nav-items {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 4px
+    }
+
+    .nav-item {
+      border: 0;
+      background: transparent;
+      color: #343838;
+      padding: 13px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: .93rem;
+      transition: .25s
+    }
+
+    .nav-item:hover {
+      background: rgba(30, 70, 68, .09)
+    }
+
+    .nav-item.active {
+      background: #183f3d;
+      color: #fff;
+      box-shadow: 0 5px 18px rgba(24, 63, 61, .18)
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 125px max(5vw, 28px) 90px
+    }
+
+    .page-inner {
+      width: min(1180px, 100%);
+      margin: auto
+    }
+
+    .page-kicker {
+      color: var(--gold);
+      letter-spacing: .26em;
+      font-size: .72rem;
+      text-transform: uppercase
+    }
+
+    .page-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2.7rem, 5.5vw, 5rem);
+      line-height: 1.08;
+      margin: 14px 0 20px
+    }
+
+    .page-lead {
+      max-width: 760px;
+      color: #b8b2a8;
+      line-height: 2
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+      margin: 45px 0
+    }
+
+    /* 首页 */
+    #page-home {
+      min-height: 100vh;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .82), rgba(0, 0, 0, .42), rgba(0, 0, 0, .73)), url("picture/p4.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .home-hero {
+      min-height: calc(100vh - 160px);
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 55px;
+      align-items: center
+    }
+
+    .home-copy .quote {
+      margin-top: 34px;
+      padding: 20px 0 20px 24px;
+      border-left: 2px solid var(--gold);
+      color: #ddd6ca;
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      line-height: 1.7
+    }
+
+    .home-image {
+      min-height: 560px;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      background: #111
+    }
+
+    .home-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 560px;
+      object-fit: cover;
+      filter: grayscale(72%) contrast(1.06)
+    }
+
+    .home-image:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0, 0, 0, .55), transparent 60%)
+    }
+
+    /* 电影介绍 */
+    #page-film {
+      min-height: 100vh;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .82), rgba(0, 0, 0, .42), rgba(0, 0, 0, .73)), url("picture/p5.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .film-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px
+    }
+
+    .film-card {
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.7), rgba(20, 20, 20, 0.6));
+      border: 1px solid #292724;
+      padding: 30px;
+      min-height: 280px
+    }
+
+    .film-card.wide {
+      grid-column: 1/-1
+    }
+
+    .film-card h3 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.8rem;
+      margin: 0 0 15px
+    }
+
+    .film-card p {
+      color: #b5b0a6;
+      line-height: 1.95
+    }
+
+    .act-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 24px
+    }
+
+    .act {
+      border: 1px solid #302e2a;
+      background: #111;
+      padding: 22px 17px;
+      cursor: pointer;
+      transition: .3s
+    }
+
+    .act:hover,
+    .act.active {
+      border-color: var(--gold);
+      transform: translateY(-4px)
+    }
+
+    .act-num {
+      color: var(--gold);
+      font-size: .7rem;
+      letter-spacing: .16em
+    }
+
+    .act h4 {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin: 8px 0
+    }
+
+    .act p {
+      font-size: .83rem;
+      color: #8f8b84;
+      margin: 0
+    }
+
+    .act-detail {
+      margin-top: 18px;
+      padding: 24px;
+      background: #111;
+      border-left: 2px solid var(--gold);
+      color: #bbb5aa;
+      line-height: 1.9
+    }
+
+    .film-slideshow {
+      position: absolute;
+      inset: 0;
+      overflow: hidden
+    }
+
+    .film-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transform: scale(1.045);
+      filter: grayscale(72%) contrast(1.06);
+      transition: opacity 1s ease, transform 5.5s ease
+    }
+
+    .film-slide.active {
+      opacity: 1;
+      transform: scale(1)
+    }
+
+    .film-slide-dots {
+      position: absolute;
+      z-index: 4;
+      right: 28px;
+      bottom: 28px;
+      display: flex;
+      gap: 7px
+    }
+
+    .film-slide-dots span {
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(245, 241, 232, .35);
+      transition: .35s
+    }
+
+    .film-slide-dots span.active {
+      width: 22px;
+      border-radius: 4px;
+      background: var(--gold)
+    }
+
+    .film-stage {
+      display: grid;
+      grid-template-columns: 1.18fr .82fr;
+      min-height: 610px;
+      margin-top: 22px;
+      background: #111;
+      border: 1px solid #292724;
+      overflow: hidden
+    }
+
+    .film-stage-media {
+      position: relative;
+      min-height: 610px;
+      background: #080808;
+      overflow: hidden
+    }
+
+    .film-stage-media img {
+      width: 100%;
+      height: 100%;
+      min-height: 610px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(72%) contrast(1.06);
+      transition: opacity .35s, transform .7s
+    }
+
+    .film-stage-media:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0, 0, 0, .92), rgba(0, 0, 0, .12) 58%, rgba(0, 0, 0, .05));
+      pointer-events: none
+    }
+
+    .film-stage-caption {
+      position: absolute;
+      z-index: 2;
+      left: 38px;
+      right: 35px;
+      bottom: 34px
+    }
+
+    .film-stage-caption .stage-kicker {
+      color: var(--gold);
+      font-size: .72rem;
+      letter-spacing: .28em
+    }
+
+    .film-stage-caption h3 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2rem, 3.4vw, 3.25rem);
+      line-height: 1.25;
+      margin: 12px 0 0;
+      color: #f5f1e8
+    }
+
+    .film-stage-info {
+      padding: 42px 36px;
+      background: #161616
+    }
+
+    .film-stage-info .stage-label {
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: .08em;
+      font-size: .84rem;
+      margin-bottom: 25px
+    }
+
+    .film-stage-info h3 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      line-height: 1.35;
+      margin: 0 0 28px
+    }
+
+    .film-stage-info p {
+      color: #bdb7ac;
+      font-size: 1rem;
+      line-height: 2;
+      margin: 0
+    }
+
+    .film-stage-callout {
+      margin-top: 32px;
+      padding: 22px;
+      background: #101010;
+      border-left: 2px solid var(--gold);
+      color: #d8d1c6;
+      line-height: 1.85
+    }
+
+    .film-stage-callout strong {
+      display: block;
+      color: var(--gold);
+      font-size: .82rem;
+      margin-bottom: 8px
+    }
+
+    .film-stage-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px
+    }
+
+    .film-stage-meta div {
+      padding: 16px 14px;
+      background: #1d1d1d;
+      border: 1px solid #292724
+    }
+
+    .film-stage-meta b {
+      display: block;
+      color: var(--gold);
+      font-size: .78rem;
+      margin-bottom: 7px
+    }
+
+    .film-stage-meta span {
+      color: #aaa49a;
+      font-size: .82rem;
+      line-height: 1.6
+    }
+
+    /* 人物 */
+    #page-characters {
+      min-height: 100vh;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .82), rgba(0, 0, 0, .42), rgba(0, 0, 0, .73)), url("picture/p6.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .character-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+      transition: grid-template-columns .65s cubic-bezier(.2, .8, .2, 1), gap .65s
+    }
+
+    .character-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      transition: .65s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    .character-card {
+      position: relative;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid #292724;
+      background: #111;
+      transition: opacity .45s, transform .65s cubic-bezier(.2, .8, .2, 1), border-color .35s, box-shadow .45s
+    }
+
+    .character-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(70%);
+      transition: transform .65s cubic-bezier(.2, .8, .2, 1), filter .65s
+    }
+
+    .character-card:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0, 0, 0, .86), transparent 62%);
+      transition: .4s
+    }
+
+    .character-card:hover {
+      border-color: rgba(201, 168, 106, .78);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, .38);
+      z-index: 2
+    }
+
+    .character-card:hover img {
+      transform: scale(1.16);
+      filter: grayscale(8%)
+    }
+
+    .character-card:hover:after {
+      background: linear-gradient(0deg, rgba(0, 0, 0, .82), rgba(0, 0, 0, .03) 78%)
+    }
+
+    .character-name {
+      position: absolute;
+      z-index: 2;
+      left: 20px;
+      right: 20px;
+      bottom: 18px;
+      font-family: var(--serif);
+      font-size: 1.45rem
+    }
+
+    .character-name small {
+      display: block;
+      font-family: var(--sans);
+      color: #bbb;
+      font-size: .72rem;
+      margin-top: 4px;
+      letter-spacing: .08em
+    }
+
+    .character-detail {
+      position: relative;
+      min-height: 450px;
+      background: #141414;
+      border: 1px solid #2b2925;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transform: scale(.96);
+      opacity: .72;
+      transition: transform .65s cubic-bezier(.2, .8, .2, 1), opacity .45s, background .45s
+    }
+
+    .character-detail.empty {
+      background: linear-gradient(145deg, #151515, #0e0e0e);
+      justify-content: center
+    }
+
+    .character-detail h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      font-weight: 400;
+      margin: 0 0 15px
+    }
+
+    .character-detail .sub {
+      color: var(--gold);
+      font-size: .76rem;
+      letter-spacing: .16em;
+      margin-bottom: 25px
+    }
+
+    .character-detail p {
+      color: #b8b2a8;
+      line-height: 2;
+      font-size: 1rem
+    }
+
+    .detail-line {
+      height: 1px;
+      background: #2d2b27;
+      margin: 22px 0
+    }
+
+    .character-layout.character-selected {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px
+    }
+
+    .character-layout.character-selected .character-list {
+      grid-template-columns: 1fr
+    }
+
+    .character-layout.character-selected .character-card {
+      display: none
+    }
+
+    .character-layout.character-selected .character-card.active {
+      display: block;
+      aspect-ratio: auto;
+      min-height: 620px;
+      transform: scale(1.015);
+      border-color: rgba(201, 168, 106, .7);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .42)
+    }
+
+    .character-layout.character-selected .character-card.active img {
+      transform: scale(1.03);
+      filter: grayscale(8%)
+    }
+
+    .character-layout.character-selected .character-detail {
+      min-height: 620px;
+      transform: scale(1);
+      opacity: 1;
+      background: #161616
+    }
+
+    .character-back {
+      position: absolute;
+      right: 26px;
+      bottom: 22px;
+      width: 54px;
+      height: 42px;
+      border: 0;
+      border-top: 1px solid #4a453d;
+      background: transparent;
+      color: var(--gold);
+      cursor: pointer;
+      font-size: 1.55rem;
+      line-height: 1;
+      transition: .3s;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end
+    }
+
+    .character-back:hover {
+      transform: translateX(6px);
+      color: #f3eadb
+    }
+
+    .character-back span {
+      display: block;
+      font-size: 1.65rem
+    }
+
+    .character-switch {
+      position: absolute;
+      right: 30px;
+      top: 28px;
+      color: #77736b;
+      font-size: .68rem;
+      letter-spacing: .12em
+    }
+
+    /* 理论 */
+    #page-theory {
+      min-height: 100vh;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .82), rgba(0, 0, 0, .42), rgba(0, 0, 0, .73)), url("picture/p7.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .theory-stack {
+      display: grid;
+      gap: 24px
+    }
+
+    .theory-card {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 30px;
+      padding: 35px;
+      background: rgba(20, 20, 20, 0.7);
+      border: 1px solid #292724
+    }
+
+    .theory-number {
+      font-family: var(--serif);
+      font-size: 4rem;
+      color: var(--gold);
+      opacity: .8
+    }
+
+    .theory-card h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 2.1rem;
+      margin: 0 0 10px
+    }
+
+    .theory-card p {
+      color: #b7b1a7;
+      line-height: 2
+    }
+
+    .loop {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 25px
+    }
+
+    .loop span {
+      padding: 13px 20px;
+      border: 1px solid #3c3932;
+      background: #0e0e0e;
+      color: #d5d0c6
+    }
+
+    .loop i {
+      color: var(--gold);
+      font-style: normal;
+      font-size: 1.4rem
+    }
+
+    /* 启示 */
+    #page-insight {
+      min-height: 100vh;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .82), rgba(0, 0, 0, .42), rgba(0, 0, 0, .73)), url("picture/p3.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .inspire-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px
+    }
+
+    .inspire-card {
+      min-height: 280px;
+      padding: 28px;
+      background: rgba(20, 20, 20, 0.7);
+      border: 1px solid #292724
+    }
+
+    .inspire-card .num {
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: 2rem
+    }
+
+    .inspire-card h3 {
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      font-weight: 400
+    }
+
+    .inspire-card p {
+      color: #aaa49a;
+      line-height: 1.9
+    }
+
+    .spin-section {
+      margin-top: 55px;
+      padding: 45px 30px 55px;
+      background: radial-gradient(circle at center, rgba(26, 26, 26, 0.6), rgba(14, 14, 14, 0.6) 65%);
+      border: 1px solid #292724;
+      text-align: center
+    }
+
+    .spin-section h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 2.5rem;
+      margin: 8px 0
+    }
+
+    .spin-section>p {
+      color: #8f8a81
+    }
+
+    .wheel-wrap {
+      position: relative;
+      width: 330px;
+      height: 330px;
+      margin: 35px auto 25px
+    }
+
+    .pointer {
+      position: absolute;
+      z-index: 4;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 13px solid transparent;
+      border-right: 13px solid transparent;
+      border-top: 25px solid var(--gold);
+      filter: drop-shadow(0 4px 5px rgba(0, 0, 0, .5))
+    }
+
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 8px solid #292724;
+      background: conic-gradient(#302d28 0deg 120deg, #4a4031 120deg 240deg, #1d2827 240deg 360deg);
+      position: relative;
+      box-shadow: 0 0 0 1px #5a5143, 0 15px 55px rgba(0, 0, 0, .55);
+      transition: transform 1.1s cubic-bezier(.12, .78, .18, 1);
+      cursor: pointer
+    }
+
+    .wheel:before {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, .35)
+    }
+
+    .wheel-label {
+      position: absolute;
+      width: 120px;
+      left: 105px;
+      top: 42px;
+      color: #f5f0e7;
+      font-family: var(--serif);
+      font-size: 1.1rem
+    }
+
+    .wheel-label:nth-child(2) {
+      top: 185px;
+      left: 34px;
+      transform: rotate(-120deg)
+    }
+
+    .wheel-label:nth-child(3) {
+      top: 185px;
+      left: 177px;
+      transform: rotate(120deg)
+    }
+
+    .wheel-center {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: #101010;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: .72rem
+    }
+
+    .spin-result {
+      width: min(720px, 100%);
+      margin: 25px auto 0;
+      padding: 22px 26px;
+      min-height: 105px;
+      text-align: left;
+      background: #393301;
+      border-left: 2px solid var(--gold);
+      color: #bdb7ac;
+      line-height: 1.9
+    }
+
+    .spin-result strong {
+      color: var(--gold);
+      font-weight: 500
+    }
+
+    .spin-hint {
+      margin-top: 16px;
+      color: #777;
+      font-size: .8rem
+    }
+
+    .footer-note {
+      margin-top: 70px;
+      padding-top: 24px;
+      border-top: 1px solid #25231f;
+      color: #6f6b64;
+      font-size: .75rem;
+      line-height: 1.8
+    }
+
+    @media(max-width:850px) {
+      .character-layout.character-selected {
+        grid-template-columns: 1fr;
+        gap: 16px
+      }
+
+      .character-layout.character-selected .character-card.active {
+        min-height: 520px
+      }
+
+      .character-layout.character-selected .character-detail {
+        min-height: 520px
+      }
+
+      .character-detail {
+        padding: 32px 26px
+      }
+    }
+
+    @media(max-width:850px) {
+      .film-stage {
+        grid-template-columns: 1fr
+      }
+
+      .film-stage-media,
+      .film-stage-media img {
+        min-height: 430px
+      }
+
+      .film-stage-info {
+        padding: 30px 25px
+      }
+
+      .film-stage-meta {
+        grid-template-columns: 1fr
+      }
+
+      .act-list {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:850px) {
+      .top-nav {
+        height: auto;
+        min-height: 62px
+      }
+
+      .nav-items {
+        overflow-x: auto;
+        justify-content: flex-start
+      }
+
+      .nav-item {
+        padding: 11px 13px;
+        white-space: nowrap
+      }
+
+      .home-hero,
+      .character-layout {
+        grid-template-columns: 1fr
+      }
+
+      .home-image {
+        min-height: 400px
+      }
+
+      .home-image img {
+        min-height: 400px
+      }
+
+      .film-grid {
+        grid-template-columns: 1fr
+      }
+
+      .film-card.wide {
+        grid-column: auto
+      }
+
+      .act-list {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .inspire-grid {
+        grid-template-columns: 1fr
+      }
+
+      .theory-card {
+        grid-template-columns: 1fr;
+        gap: 5px
+      }
+
+      .theory-number {
+        font-size: 2.5rem
+      }
+
+      .character-detail {
+        position: relative;
+        top: auto
+      }
+    }
+
+    @media(max-width:520px) {
+      .page {
+        padding-left: 18px;
+        padding-right: 18px
+      }
+
+      .back-arrow {
+        width: 42px
+      }
+
+      .nav-item {
+        font-size: .78rem;
+        padding: 10px 9px
+      }
+
+      .character-list {
+        grid-template-columns: 1fr
+      }
+
+      .act-list {
+        grid-template-columns: 1fr
+      }
+
+      .wheel-wrap {
+        width: 280px;
+        height: 280px
+      }
+
+      .wheel-label {
+        left: 85px
+      }
+
+      .wheel-label:nth-child(2) {
+        left: 27px;
+        top: 158px
+      }
+
+      .wheel-label:nth-child(3) {
+        left: 150px;
+        top: 158px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section id="opening">
+    <div class="opening-content">
+      <div class="opening-kicker">FRANKENWEENIE · MARXISM & PRACTICE</div>
+      <h1 class="opening-title">当科学试图<br>改变死亡</h1>
+      <p class="opening-desc">《科学怪狗》表面上是一个男孩复活爱犬的故事，但它真正提出的问题是：当我们拥有越来越强大的科学技术之后，应该怎样认识生命、面对现实，又应该如何正确地使用自己的能力？</p>
+      <button class="explore-btn" id="enterBtn">进行探索电影 →</button>
+    </div>
+  </section>
+  <div id="site">
+    <nav class="top-nav"><button class="back-arrow" id="backBtn" aria-label="返回第一幕">←</button>
+      <div class="nav-items"><button class="nav-item active" data-page="home">首页</button><button class="nav-item"
+          data-page="film">电影介绍</button><button class="nav-item" data-page="characters">喜欢的人物</button><button
+          class="nav-item" data-page="theory">马克思主义分析</button><button class="nav-item" data-page="insight">启示</button>
+      </div>
+    </nav>
+    <section class="page" id="page-home">
+      <div class="page-inner">
+        <div class="home-hero">
+          <div class="home-copy">
+            <div class="page-kicker">FRANKENWEENIE · 2012</div>
+            <h1 class="page-title">一只狗的复活，<br>一次认识的改变。</h1>
+            <p class="page-lead">维克多失去斯巴奇后，试图用科学让爱犬重新获得生命。实验成功，却带来了新的问题。故事最后真正被改变的，并不是死亡本身，而是维克多对生命、实践与责任的认识。</p>
+            <div class="quote">“维克多最开始想用科学改变死亡，<br>但最终真正改变的是他自己对生命的认识。”</div>
+          </div>
+          <div class="home-image"><img src="picture/p2.jpg" alt="《科学怪狗》"></div>
+        </div>
+      </div>
+    </section>
+    <section class="page" id="page-film" hidden>
+      <div class="page-inner">
+        <div class="page-kicker">FILM / STORY</div>
+        <h1 class="page-title">电影介绍</h1>
+        <p class="page-lead">从“失去”开始，到“重新理解”结束。电影可以被看作四个连续的阶段：一个愿望进入实践，实践产生结果，结果又产生新的矛盾，最终推动认识发生变化。</p>
+        <div class="section-divider"></div>
+        <div class="film-grid">
+          <article class="film-card">
+            <h3>故事的起点</h3>
+            <p>维克多和斯巴奇关系亲密。一次意外让斯巴奇死亡，维克多第一次直接面对自己无法接受的失去。电影真正的起点，不是实验，而是一个人面对客观现实后的情感冲动。</p>
+          </article>
+          <article class="film-card">
+            <h3>故事的核心</h3>
+            <p>维克多受到科学老师和课堂实验的启发，在阁楼实验室中进行实验。他成功让斯巴奇重新获得生命，但这个“成功”并没有结束问题，反而把故事推向下一阶段。</p>
+          </article>
+          <article class="film-card wide">
+            <h3>四幕 · 一次认识的变化</h3>
+            <div class="act-list">
+              <div class="act active" data-act="0">
+                <div class="act-num">ACT I</div>
+                <h4>失去</h4>
+                <p>现实与愿望</p>
+              </div>
+              <div class="act" data-act="1">
+                <div class="act-num">ACT II</div>
+                <h4>复活</h4>
+                <p>知识进入实践</p>
+              </div>
+              <div class="act" data-act="2">
+                <div class="act-num">ACT III</div>
+                <h4>危机</h4>
+                <p>新的矛盾产生</p>
+              </div>
+              <div class="act" data-act="3">
+                <div class="act-num">ACT IV</div>
+                <h4>重新理解</h4>
+                <p>认识进一步深化</p>
+              </div>
+            </div>
+            <div class="film-stage">
+              <div class="film-stage-media">
+                <div class="film-slideshow" id="filmSlideshow">
+                </div>
+                <div class="film-slide-dots" id="filmSlideDots">
+                </div>
+                <div class="film-stage-caption">
+                  <div class="stage-kicker" id="actStageKicker">ACT I · LOSS</div>
+                  <h3 id="actStageTitle">失去：维克多第一次面对死亡</h3>
+                </div>
+              </div>
+              <div class="film-stage-info">
+                <div class="stage-label">电影叙事</div>
+                <h3 id="actInfoTitle">失去：维克多第一次面对死亡</h3>
+                <p id="actInfoText">维克多和斯巴奇关系亲密。一次意外让斯巴奇死亡，维克多第一次直接面对自己无法接受的失去。电影真正的起点，不是实验，而是一个人面对客观现实后的情感冲动。</p>
+                <div class="film-stage-callout"><strong>核心转折</strong><span
+                    id="actCallText">维克多想改变的表面上是斯巴奇的命运，实际上是自己对“失去”的无力感。</span></div>
+                <div class="film-stage-meta">
+                  <div><b>核心概念</b><span id="actKey">现实与愿望</span></div>
+                  <div><b>结构</b><span id="actStructure">失去 → 产生行动动机</span></div>
+                  <div><b>问题</b><span id="actQuestion">我们如何面对无法改变的现实？</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="page" id="page-characters" hidden>
+      <div class="page-inner">
+        <div class="page-kicker">CHARACTERS</div>
+        <h1 class="page-title">喜欢的人物</h1>
+        <p class="page-lead">先观察人物，再进入人物背后的问题。点击人物图片后，右侧会展开对应介绍；未选择时，内容框保持收起状态。</p>
+        <div class="section-divider"></div>
+        <div class="character-layout" id="characterLayout">
+          <div class="character-list">
+            <article class="character-card" data-character="victor"><img src="picture/r1.jpg" alt="维克多">
+              <div class="character-name">维克多 Victor<small>聪明 · 好奇 · 执着</small></div>
+            </article>
+            <article class="character-card" data-character="sparky"><img src="picture/r2.jpg" alt="斯巴奇">
+              <div class="character-name">斯巴奇 sparky<small>陪伴 · 生命 · 失去</small></div>
+            </article>
+            <article class="character-card" data-character="teacher"><img src="picture/r3.jpg" alt="科学老师 Mr.Rzykruski">
+              <div class="character-name">科学老师 Mr.Rzykruski<small>知识 · 实验 · 责任</small></div>
+            </article>
+            <article class="character-card" data-character="relationship"><img src="picture/r4.jpg" alt="求胜心切">
+              <div class="character-name">求胜心切<small>个人愿望 · 公共后果</small></div>
+            </article>
+          </div>
+          <aside class="character-detail empty" id="characterDetail">
+            <div class="character-switch" id="characterSwitch">CHARACTER PROFILE</div>
+            <div id="characterDetailContent">
+              <div class="page-kicker">SELECT A CHARACTER</div>
+              <h2>选择一个人物</h2>
+              <p>先从四张人物图片中选择。鼠标悬停时可以观察放大效果，点击后进入人物介绍。</p>
+            </div><button class="character-back" id="characterBack" aria-label="返回人物选择"><span>→</span></button>
+          </aside>
+        </div>
+      </div>
+    </section>
+    <section class="page" id="page-theory" hidden>
+      <div class="page-inner">
+        <div class="page-kicker">MARXISM / ANALYSIS</div>
+        <h1 class="page-title">马克思主义分析</h1>
+        <p class="page-lead">这部电影不需要堆砌很多理论。围绕维克多的行动，重点抓住两个最清晰的角度：实践与认识、矛盾与发展。</p>
+        <div class="section-divider"></div>
+        <div class="theory-stack">
+          <article class="theory-card">
+            <div class="theory-number">01</div>
+            <div>
+              <h2>实践与认识</h2>
+              <p>实践是认识的来源和动力，认识又反过来指导实践。维克多先获得科学知识，再把知识转化为实验；而实验结果又迫使他重新认识生命。一次成功的实践，不等于认识已经终结。</p>
+              <div class="loop">
+                <span>认识</span><i>→</i><span>实践</span><i>→</i><span>结果</span><i>→</i><span>新认识</span><i>↺</i>
+              </div>
+            </div>
+          </article>
+          <article class="theory-card">
+            <div class="theory-number">02</div>
+            <div>
+              <h2>矛盾与发展</h2>
+              <p>科学技术能够帮助人认识和改造世界，但具体的实践也可能产生新的矛盾。维克多原本只想让斯巴奇回来，却不得不面对实验被知晓、模仿以及失控的后果。解决一个问题，并不意味着所有问题都消失。</p>
+              <div class="loop"><span>愿望</span><i>→</i><span>行动</span><i>→</i><span>新问题</span><i>→</i><span>再认识</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="page" id="page-insight" hidden>
+      <div class="page-inner">
+        <div class="page-kicker">FOR UNIVERSITY STUDENTS</div>
+        <h1 class="page-title">启示</h1>
+        <p class="page-lead">电影最后需要回到我们自己：面对失败、学习知识、使用能力时，我们应该怎样行动？</p>
+        <div class="section-divider"></div>
+        <div class="inspire-grid">
+          <article class="inspire-card">
+            <div class="num">01</div>
+            <h3>正确面对挫折</h3>
+            <p>考试失败、计划落空、竞赛失利，也会让我们产生“如果能重来一次就好了”的想法。面对挫折的第一步，是认识现实；第二步，才是寻找能够改变的东西。</p>
+          </article>
+          <article class="inspire-card">
+            <div class="num">02</div>
+            <h3>从“知道”到“做到”</h3>
+            <p>学习专业知识不能停留在“我会背”。实验、项目、社会调查、实习和真实问题，都是把理论变成能力的实践。更重要的是接受实践反馈。</p>
+          </article>
+          <article class="inspire-card">
+            <div class="num">03</div>
+            <h3>能做到 ≠ 应该做</h3>
+            <p>今天的 AI、科研和专业技术也一样。越有能力的人，越需要考虑后果、边界和责任。能力与责任应该同步增长。</p>
+          </article>
+        </div>
+        <div class="spin-section">
+          <div class="page-kicker">FINAL QUESTION</div>
+          <h2>你怎么做？</h2>
+          <p>如果你是维克多，你会怎么做？</p>
+          <div class="wheel-wrap">
+            <div class="pointer"></div>
+            <div class="wheel" id="wheel">
+              <div class="wheel-label">先成功<br>再考虑后果</div>
+              <div class="wheel-label">先认识规律<br>再决定行动</div>
+              <div class="wheel-label">出于爱<br>就应该行动</div>
+              <div class="wheel-center">选择</div>
+            </div>
+          </div>
+          <div class="spin-result" id="spinResult">点击转盘，看看你这一轮遇到的选择。</div>
+          <div class="spin-hint">三个选项依次轮转：A → B → C → A → B → C……</div>
+        </div>
+        <div class="footer-note">
+          《科学怪狗》表面上讲的是一个男孩用科学复活爱犬的故事，但实际上，它让我们思考的是：当我们拥有越来越强大的科学技术之后，我们应该怎样认识生命、面对现实，又应该如何正确地使用自己的能力？</div>
+      </div>
+    </section>
+  </div>
+  <script>
+    const opening = document.getElementById('opening'), site = document.getElementById('site'), enterBtn = document.getElementById('enterBtn'), backBtn = document.getElementById('backBtn');
+    const navItems = document.querySelectorAll('.nav-item'); const pages = { home: document.getElementById('page-home'), film: document.getElementById('page-film'), characters: document.getElementById('page-characters'), theory: document.getElementById('page-theory'), insight: document.getElementById('page-insight') };
+    function enterSite() { opening.classList.add('opening-hidden'); setTimeout(() => { site.classList.add('show'); pages.home.hidden = false; window.scrollTo(0, 0) }, 650) }
+    enterBtn.onclick = enterSite; backBtn.onclick = () => { site.classList.remove('show'); opening.classList.remove('opening-hidden'); window.scrollTo(0, 0) };
+    function switchPage(name) {
+      Object.keys(pages).forEach(k => pages[k].hidden = k !== name); navItems.forEach(b => b.classList.toggle('active', b.dataset.page === name)); 
+      if (name === 'film') {
+        setTimeout(() => {
+          renderAct(0);
+        }, 50);
+      } 
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+    navItems.forEach(b => b.onclick = () => switchPage(b.dataset.page));
+    const acts = [
+      { imgs: ['picture/j1.1.jpg'], kicker: 'ACT I · LOSS', title: '失去：维克多第一次面对死亡', story: '维克多和斯巴奇关系亲密。一次意外让斯巴奇死亡，维克多第一次直接面对自己无法接受的失去。电影真正的起点，不是实验，而是一个人面对客观现实后的情感冲动。', call: '维克多想改变的表面上是斯巴奇的命运，实际上是自己对“失去”的无力感。', key: '现实与愿望', structure: '失去 → 产生行动动机', question: '我们如何面对无法改变的现实？' },
+      { imgs: ['picture/j2.jpg', 'picture/j2.2.jpg'], kicker: 'ACT II · PRACTICE', title: '复活：科学成为改变现实的实践', story: '维克多受到科学老师和课堂实验的启发，在阁楼实验室中进行实验。他成功让斯巴奇重新获得生命。但这个“成功”并没有结束问题，反而把故事推向下一阶段。', call: '知识只有进入实践，才会真正暴露它的边界。', key: '实践与认识', structure: '知识 → 实践 → 反馈', question: '理论如何真正变成能力？' },
+      { imgs: ['picture/j3.1.jpg', 'picture/j3.2.jpg', 'picture/j3.3.jpg'], kicker: 'ACT III · CONTRADICTION', title: '危机：解决一个问题，又产生新的问题', story: '维克多原本只想让斯巴奇回来，却不得不面对实验被其他孩子知晓、模仿以及失控的后果。个人愿望逐渐变成公共危机，科学的力量开始呈现另一面。', call: '真正的问题已经从“能不能做到”变成“做到以后怎么办”。', key: '矛盾与发展', structure: '解决 → 新矛盾 → 再解决', question: '拥有能力之后，我们是否也承担相应责任？' },
+      { imgs: ['picture/j4.1.jpg', 'picture/j4.2.jpg'], kicker: 'ACT IV · RECOGNITION', title: '重新理解：真正被改变的是维克多', story: '故事最后不再只是追问“如何复活”，而是让维克多重新理解生命、失去与陪伴。经过一系列实践和危机，他对自己最初的愿望有了不同的认识。', call: '维克多没有真正“战胜死亡”，但他学会了更成熟地理解生命。', key: '认识的发展', structure: '实践 → 认识 → 再实践 → 再认识', question: '我们能否从失败中形成新的认识？' }
+    ];
+    let filmSlideIndex = 0;
+    let filmSlideTimer = null;
+    // 增加参数 total：当前act图片总张数
+    function showFilmSlide(index, total) {
+      const slides = [...document.querySelectorAll('.film-slide')];
+      const dots = [...document.querySelectorAll('#filmSlideDots span')];
+      filmSlideIndex = index % total;
+
+      // 全部图片重置
+      slides.forEach((s, i) => {
+        s.classList.remove('active');
+        s.style.opacity = '0';
+        s.style.transform = 'scale(1.045)';
+      })
+      // 圆点激活
+      dots.forEach((d, i) => d.classList.toggle('active', i === filmSlideIndex));
+
+      // 当前图片激活
+      const currentSlide = slides[filmSlideIndex];
+      currentSlide.classList.add('active');
+      currentSlide.style.opacity = '1';
+      currentSlide.style.transform = 'scale(1)';
+    }
+
+    function startFilmSlideshow(total) {
+      clearInterval(filmSlideTimer);
+      filmSlideTimer = setInterval(() => {
+        showFilmSlide(filmSlideIndex + 1, total);
+      }, 5000);
+    }
+    function renderAct(index) {
+      const a = acts[index];
+      const total = a.imgs.length; // 获取当前act图片数量（2张就=2，1张=1）
+      const slideWrap = document.getElementById('filmSlideshow');
+      slideWrap.innerHTML = ''; //清空旧图片
+      clearInterval(filmSlideTimer);
+      filmSlideIndex = 0;
+
+      // 循环生成图片
+      a.imgs.forEach((imgSrc, idx) => {
+        const img = document.createElement('img');
+        img.className = 'film-slide';
+        img.src = imgSrc;
+        img.alt = a.title + "场景" + (idx + 1);
+        // 你的原有动画样式
+        img.style.opacity = '0';
+        img.style.transform = 'scale(1.045)';
+        if (idx === 0) {
+          img.classList.add('active');
+          img.style.opacity = '1';
+        }
+        slideWrap.appendChild(img);
+      })
+
+      document.getElementById('actStageKicker').textContent = a.kicker;
+      document.getElementById('actStageTitle').textContent = a.title;
+      document.getElementById('actInfoTitle').textContent = a.title;
+      document.getElementById('actInfoText').textContent = a.story;
+      document.getElementById('actCallText').textContent = a.call;
+      document.getElementById('actKey').textContent = a.key;
+      document.getElementById('actStructure').textContent = a.structure;
+      document.getElementById('actQuestion').textContent = a.question;
+      // 动态生成小圆点！！！你原来的小圆点固定写了3个，2张图会多出一个无效圆点
+      const dotWrap = document.getElementById('filmSlideDots');
+      dotWrap.innerHTML = ''; //清空旧圆点
+      for (let i = 0; i < total; i++) {
+        const span = document.createElement('span');
+        if (i === 0) span.classList.add('active');
+        // 圆点点击事件，点击切换图片
+        span.onclick = () => {
+          showFilmSlide(i, total);
+        }
+        dotWrap.appendChild(span);
+      }
+      startFilmSlideshow(total); // 把图片总数传给轮播定时器
+    }
+
+    document.querySelectorAll('.act').forEach(el => el.onclick = () => { document.querySelectorAll('.act').forEach(x => x.classList.remove('active')); el.classList.add('active'); renderAct(+el.dataset.act) });
+    const characterData = {
+      victor: { title: '维克多', sub: 'VICTOR · 科学 / 愿望 / 实践', text: '维克多聪明、好奇、热爱科学。失去斯巴奇后，他没有停留在悲伤中，而是试图寻找一种能够改变现实的方法。', extra: '从马克思主义的实践观点看，他的问题并不只是“会不会做实验”，而是认识如何进入实践，以及实践结果如何反过来改变认识。' },
+      sparky: { title: '斯巴奇', sub: 'SPARKY · 陪伴 / 生命 / 失去', text: '斯巴奇是维克多最忠诚的伙伴，也是整场实验最重要的情感起点。它让“复活”不再只是一个科学问题，而成为一个关于生命和失去的问题。', extra: '斯巴奇的存在提醒我们：科学面对的并不是抽象对象，而是真实的生命、关系与具体的人。' },
+      teacher: { title: '科学与实践', sub: 'SCIENCE · KNOWLEDGE / PRACTICE', text: '科学知识给维克多提供了改变现实的可能，但知识本身并没有自动告诉他所有后果。只有进入实践，知识才会接受现实的检验。', extra: '因此，科学不是万能钥匙。它需要与实践、责任以及对客观规律的认识结合起来。' },
+      relationship: { title: '维克多与世界', sub: 'INDIVIDUAL · CONSEQUENCE', text: '当实验只属于维克多时，它似乎只是个人选择；当其他人开始模仿，个人愿望便逐渐转化成公共问题。', extra: '这正体现了矛盾的发展：解决原来的问题之后，新的矛盾可能在新的条件下出现。' }
+    };
+
+    const characterLayout = document.getElementById('characterLayout');
+    const characterDetail = document.getElementById('characterDetail');
+    const characterDetailContent = document.getElementById('characterDetailContent');
+    const characterBack = document.getElementById('characterBack');
+
+    document.querySelectorAll('.character-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const d = characterData[card.dataset.character];
+        document.querySelectorAll('.character-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+
+        characterDetailContent.innerHTML = `
+      <div class="page-kicker">${d.sub}</div>
+      <h2>${d.title}</h2>
+      <div class="detail-line"></div>
+      <p>${d.text}</p>
+      <p>${d.extra}</p>
+    `;
+
+        characterLayout.classList.add('character-selected');
+        characterDetail.classList.remove('empty');
+        document.getElementById('characterSwitch').textContent = 'CHARACTER PROFILE';
+      });
+    });
+
+    characterBack.addEventListener('click', () => {
+      characterLayout.classList.remove('character-selected');
+      document.querySelectorAll('.character-card').forEach(c => c.classList.remove('active'));
+      characterDetail.classList.add('empty');
+      characterDetailContent.innerHTML = `
+    <div class="page-kicker">SELECT A CHARACTER</div>
+    <h2>选择一个人物</h2>
+    <p>先从四张人物图片中选择。鼠标悬停时可以观察放大效果，点击后进入人物介绍。</p>
+  `;
+    });
+
+    let spinIndex = 0, wheelRotation = 0; const wheel = document.getElementById('wheel'), spinResult = document.getElementById('spinResult'); const spinData = [{ title: 'A · 先想办法成功，再考虑后果', text: '这种选择强调行动和结果，但容易忽视实践中的客观规律以及行动可能产生的新问题。电影中的危机正提醒我们：能力越强，越需要考虑边界和后果。' }, { title: 'B · 先认识规律，再决定是否行动', text: '这种选择更符合实践观点：尊重客观规律，同时通过实践不断检验认识。真正的理性不是“不行动”，而是在认识基础上更负责地行动。' }, { title: 'C · 只要出于爱，行动就是正确的', text: '情感可以成为行动的重要动力，但动机正确并不自动意味着结果正确。实践还需要接受客观条件和实际结果的检验。' }];
+    wheel.onclick = () => { spinIndex = (spinIndex + 1) % 3; wheelRotation += 480; wheel.style.transform = `rotate(${wheelRotation}deg)`; const d = spinData[spinIndex]; setTimeout(() => spinResult.innerHTML = `<strong>${d.title}</strong><br>${d.text}`, 500) };
+    document.querySelectorAll('.act').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = Number(el.dataset.act);
+        renderAct(idx);
+      })
+    })
+  </script>
+</body>
+
+</html>
