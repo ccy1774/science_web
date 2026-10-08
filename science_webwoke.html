@@ -301,6 +301,15 @@
       background: linear-gradient(0deg, rgba(0, 0, 0, .55), transparent 60%)
     }
 
+    .page-kicker {
+      color: var(--gold);
+      /* 保持黄色 */
+      font-size: 1.5rem;
+      /* 修改这里！数字变大文字变大，比如1.2rem */
+      margin-bottom: 12px;
+      /* 可以微调和下方大标题的间距 */
+    }
+
     /* 电影介绍 */
     #page-film {
       min-height: 100vh;
@@ -1167,10 +1176,10 @@
       <div class="page-inner">
         <div class="home-hero">
           <div class="home-copy">
-            <div class="page-kicker">FRANKENWEENIE · 2012</div>
-            <h1 class="page-title">一只狗的复活，<br>一次认识的改变。</h1>
+            <div class="page-kicker"> 蒂姆·波顿 1984 · 定格动画短片</div>
+            <h1 class="page-title">《科学怪狗》 电影赏析 </h1>
             <p class="page-lead">维克多失去斯巴奇后，试图用科学让爱犬重新获得生命。实验成功，却带来了新的问题。故事最后真正被改变的，并不是死亡本身，而是维克多对生命、实践与责任的认识。</p>
-            <div class="quote">“维克多最开始想用科学改变死亡，<br>但最终真正改变的是他自己对生命的认识。”</div>
+            <div class="quote">“一场关于技术、情感与客观规律的故事。”</div>
           </div>
           <div class="home-image"><img src="picture/p2.jpg" alt="《科学怪狗》"></div>
         </div>
@@ -1189,7 +1198,7 @@
           </article>
           <article class="film-card">
             <h3>故事的核心</h3>
-            <p>维克多受到科学老师和课堂实验的启发，在阁楼实验室中进行实验。他成功让斯巴奇重新获得生命，但这个“成功”并没有结束问题，反而把故事推向下一阶段。</p>
+            <p>美好的情感愿望，能否突破自然规律与伦理边界？</p>
           </article>
           <article class="film-card wide">
             <h3>四幕 · 一次认识的变化</h3>
@@ -1247,7 +1256,7 @@
       <div class="page-inner">
         <div class="page-kicker">CHARACTERS</div>
         <h1 class="page-title">喜欢的人物</h1>
-        <p class="page-lead">先观察人物，再进入人物背后的问题。点击人物图片后，右侧会展开对应介绍；未选择时，内容框保持收起状态。</p>
+        <p class="page-lead">进入人物背后的问题。<br>每个人物都承载着独特的叙事与思想价值。</p>
         <div class="section-divider"></div>
         <div class="character-layout" id="characterLayout">
           <div class="character-list">
@@ -1269,7 +1278,7 @@
             <div id="characterDetailContent">
               <div class="page-kicker">SELECT A CHARACTER</div>
               <h2>选择一个人物</h2>
-              <p>先从四张人物图片中选择。鼠标悬停时可以观察放大效果，点击后进入人物介绍。</p>
+              <p>点击后进入人物介绍。</p>
             </div><button class="character-back" id="characterBack" aria-label="返回人物选择"><span>→</span></button>
           </aside>
         </div>
@@ -1279,7 +1288,7 @@
       <div class="page-inner">
         <div class="page-kicker">MARXISM / ANALYSIS</div>
         <h1 class="page-title">马克思主义分析</h1>
-        <p class="page-lead">这部电影不需要堆砌很多理论。围绕维克多的行动，重点抓住两个最清晰的角度：实践与认识、矛盾与发展。</p>
+        <p class="page-lead">两个角度：实践与认识、矛盾与发展。<br>维克多的动机是爱，动机本身是善意，但实践方式存在局限。</p>
         <div class="section-divider"></div>
         <div class="theory-stack">
           <article class="theory-card">
@@ -1354,12 +1363,12 @@
     function enterSite() { opening.classList.add('opening-hidden'); setTimeout(() => { site.classList.add('show'); pages.home.hidden = false; window.scrollTo(0, 0) }, 650) }
     enterBtn.onclick = enterSite; backBtn.onclick = () => { site.classList.remove('show'); opening.classList.remove('opening-hidden'); window.scrollTo(0, 0) };
     function switchPage(name) {
-      Object.keys(pages).forEach(k => pages[k].hidden = k !== name); navItems.forEach(b => b.classList.toggle('active', b.dataset.page === name)); 
+      Object.keys(pages).forEach(k => pages[k].hidden = k !== name); navItems.forEach(b => b.classList.toggle('active', b.dataset.page === name));
       if (name === 'film') {
         setTimeout(() => {
           renderAct(0);
         }, 50);
-      } 
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
     navItems.forEach(b => b.onclick = () => switchPage(b.dataset.page));
@@ -1490,7 +1499,7 @@
   `;
     });
 
-    let spinIndex = 0, wheelRotation = 0; const wheel = document.getElementById('wheel'), spinResult = document.getElementById('spinResult'); const spinData = [{ title: 'A · 先想办法成功，再考虑后果', text: '这种选择强调行动和结果，但容易忽视实践中的客观规律以及行动可能产生的新问题。电影中的危机正提醒我们：能力越强，越需要考虑边界和后果。' }, { title: 'B · 先认识规律，再决定是否行动', text: '这种选择更符合实践观点：尊重客观规律，同时通过实践不断检验认识。真正的理性不是“不行动”，而是在认识基础上更负责地行动。' }, { title: 'C · 只要出于爱，行动就是正确的', text: '情感可以成为行动的重要动力，但动机正确并不自动意味着结果正确。实践还需要接受客观条件和实际结果的检验。' }];
+    let spinIndex = 0, wheelRotation = 0; const wheel = document.getElementById('wheel'), spinResult = document.getElementById('spinResult'); const spinData = [{ title: 'C · 先想办法成功，再考虑后果', text: '这种选择强调行动和结果，但容易忽视实践中的客观规律以及行动可能产生的新问题。电影中的危机正提醒我们：能力越强，越需要考虑边界和后果。' }, { title: 'A · 先认识规律，再决定是否行动', text: '这种选择更符合实践观点：尊重客观规律，同时通过实践不断检验认识。真正的理性不是“不行动”，而是在认识基础上更负责地行动。' }, { title: 'B · 只要出于爱，行动就是正确的', text: '情感可以成为行动的重要动力，但动机正确并不自动意味着结果正确。实践还需要接受客观条件和实际结果的检验。' }];
     wheel.onclick = () => { spinIndex = (spinIndex + 1) % 3; wheelRotation += 480; wheel.style.transform = `rotate(${wheelRotation}deg)`; const d = spinData[spinIndex]; setTimeout(() => spinResult.innerHTML = `<strong>${d.title}</strong><br>${d.text}`, 500) };
     document.querySelectorAll('.act').forEach(el => {
       el.addEventListener('click', () => {
